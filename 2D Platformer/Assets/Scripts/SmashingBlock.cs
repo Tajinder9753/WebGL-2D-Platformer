@@ -13,7 +13,6 @@ public class SmashingBlock : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("starting");
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
     }

@@ -22,6 +22,6 @@ public class FallingPlatform : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = gravityScale;
-        Destroy(this, 5f);
+        Destroy(this.gameObject, 4f);
     }
 }
