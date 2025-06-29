@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float jumpForce;
+    [SerializeField] private Animator anim;
     private bool isGrounded;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.tag.Equals("Ground"))
         {
             isGrounded = true;
+            anim.SetBool("isGrounded", true);
+            anim.SetBool("isJumping", false);
         }
     }
     private void Awake()
@@ -21,16 +24,18 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
-        if (Input.GetButtonDown("Jump") && isGrounded)
+
+        if (Input.GetAxis("Jump") > 0 && isGrounded)
         {
+            anim.SetBool("isJumping", true);
             Jump();
             rb.gravityScale = 1;
         }
-        
-        if (Input.GetButtonUp("Jump")) //| rb.velocity.y < -0.1)
+
+        if (Input.GetAxisRaw("Jump") == 0)
         {
             rb.gravityScale = 2;
         }
@@ -38,16 +43,37 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed;
-        Vector2 newVelocity;
-        newVelocity.x = horizontalMovement;
-        newVelocity.y = rb.velocity.y;
-        rb.velocity = newVelocity;
+        float horizontalMovement = Input.GetAxisRaw("Horizontal") * moveSpeed;
+
+        if (horizontalMovement > 0)
+        {
+            anim.SetBool("isRunning", true);
+            GetComponent<SpriteRenderer>().flipX = false;
+            Vector2 newVelocity;
+            newVelocity.x = horizontalMovement;
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
+        }
+        else if (horizontalMovement < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            anim.SetBool("isRunning", true);
+
+            Vector2 newVelocity;
+            newVelocity.x = horizontalMovement;
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+        }
     }
 
     private void Jump()
     {
         isGrounded = false;
+        anim.SetBool("isGrounded", false);
         Vector2 newVelocity;
         newVelocity.x = rb.velocity.x;
         newVelocity.y = jumpForce;
