@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private Animator anim;
     private bool isGrounded;
+    GameManger gameManager;
+    public Vector3 checkpoint;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -18,10 +20,27 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isGrounded", true);
             anim.SetBool("isJumping", false);
         }
+        if (collision.collider.tag == "trap")
+        {
+            // Trigger the "hit" animation
+            transform.position = checkpoint;
+            anim.SetBool("isHit", true);
+            rb.bodyType = RigidbodyType2D.Static;
+            // Start the coroutine to return to normal animation after a delay
+            StartCoroutine(ResetToNormalAnimation());
+        }
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+            checkpoint = new Vector3(collision.transform.position.x, collision.transform.position.y-1f, collision.transform.position.z);
+
     }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        GameObject startFlag = GameObject.FindGameObjectWithTag("start");
+        checkpoint = new Vector3(startFlag.transform.position.x, startFlag.transform.position.y - 1.5f, startFlag.transform.position.z);
     }
 
     private void FixedUpdate()
@@ -68,6 +87,17 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isRunning", false);
         }
+    }
+
+    private IEnumerator ResetToNormalAnimation()
+    {
+        // Wait for the duration of the "hit" animation
+        yield return new WaitForSeconds(3f);
+
+        // Set the "isHit" bool to false to transition back to the normal animation
+        anim.SetBool("isHit", false);
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
     }
 
     private void Jump()
