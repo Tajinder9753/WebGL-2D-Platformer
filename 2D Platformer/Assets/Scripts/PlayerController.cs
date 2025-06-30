@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +37,11 @@ public class PlayerController : MonoBehaviour
 
             // Start the coroutine to return to normal animation after a delay
             StartCoroutine(ResetToNormalAnimation());
+        }
+
+        if(collision.collider.tag == "trophy")
+        {
+            SceneManager.LoadScene(2);
         }
 
     }
