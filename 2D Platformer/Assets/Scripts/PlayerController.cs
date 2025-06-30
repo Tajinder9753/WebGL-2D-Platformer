@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private Animator anim;
     private bool isGrounded;
-    public Vector3 checkpoint;
+    public Vector2 checkpoint;
+    [SerializeField] GameObject gameManager;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -19,12 +20,19 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isGrounded", true);
             anim.SetBool("isJumping", false);
         }
-        if (collision.collider.tag == "trap")
+
+        if (collision.collider.tag == "trap" || collision.collider.tag == "spike")
         {
             // Trigger the "hit" animation
             transform.position = checkpoint;
             anim.SetBool("isHit", true);
             rb.bodyType = RigidbodyType2D.Static;
+            GameObject[] spikeBalls = GameObject.FindGameObjectsWithTag("spike");
+            foreach (GameObject spikeBall in spikeBalls) {
+                Destroy(spikeBall);
+            }
+            gameManager.GetComponent<GameManger>().resetBrownPlatform();
+
             // Start the coroutine to return to normal animation after a delay
             StartCoroutine(ResetToNormalAnimation());
         }
@@ -32,20 +40,19 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-            checkpoint = new Vector3(collision.transform.position.x, collision.transform.position.y-1f, collision.transform.position.z);
+            checkpoint = new Vector2(transform.position.x, transform.position.y);
 
     }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        GameObject startFlag = GameObject.FindGameObjectWithTag("start");
-        checkpoint = new Vector3(startFlag.transform.position.x, startFlag.transform.position.y - 1.5f, startFlag.transform.position.z);
+        checkpoint = new Vector2(transform.position.x, transform.position.y);
     }
 
     private void FixedUpdate()
     {
         Move();
-
+        Debug.Log(checkpoint);
         if (Input.GetAxis("Jump") > 0 && isGrounded)
         {
             anim.SetBool("isJumping", true);
@@ -63,6 +70,12 @@ public class PlayerController : MonoBehaviour
             transform.position = checkpoint;
             anim.SetBool("isHit", true);
             rb.bodyType = RigidbodyType2D.Static;
+            GameObject[] spikeBalls = GameObject.FindGameObjectsWithTag("spike");
+            foreach (GameObject spikeBall in spikeBalls)
+            {
+                Destroy(spikeBall);
+            }
+            gameManager.GetComponent<GameManger>().resetBrownPlatform();
             // Start the coroutine to return to normal animation after a delay
             StartCoroutine(ResetToNormalAnimation());
         }

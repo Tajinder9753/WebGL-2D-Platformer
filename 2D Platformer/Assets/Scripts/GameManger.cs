@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManger : MonoBehaviour
 {
+    [SerializeField] GameObject brownPlatform;
     public void starGame()
     {
         SceneManager.LoadScene(1);
@@ -14,4 +15,11 @@ public class GameManger : MonoBehaviour
     {
         Application.Quit();
     }
+
+   public void resetBrownPlatform()
+    {
+        brownPlatform.GetComponent<BrownMovingPlatform>().isMoving = false;
+        brownPlatform.transform.position = brownPlatform.GetComponent<BrownMovingPlatform>().initialSpot;
+    }
+
 }

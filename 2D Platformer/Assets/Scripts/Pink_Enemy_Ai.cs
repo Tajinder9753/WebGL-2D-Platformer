@@ -38,7 +38,7 @@ public class Pink_Enemy_Ai : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("barrier"))
+        if (collision.collider.tag != "Player")
         {
             // Flip direction
             movingRight = !movingRight;
