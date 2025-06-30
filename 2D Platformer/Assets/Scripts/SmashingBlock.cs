@@ -13,6 +13,7 @@ public class SmashingBlock : MonoBehaviour
     Animator anim;
     public float returnSpeed = 2f; // units per second
     private bool isReturning = false;
+    [SerializeField] GameObject smoke;
 
     private void Start()
     {
@@ -74,6 +75,8 @@ public class SmashingBlock : MonoBehaviour
         {
             anim.SetBool("isFalling", false);
             anim.SetBool("hitGround", true);
+            GameObject effectInstance = (GameObject)Instantiate(smoke, transform.position-new Vector3(0,+2f,0), transform.rotation);
+            Destroy(effectInstance, 2f);
             GoBack();
         }
     }

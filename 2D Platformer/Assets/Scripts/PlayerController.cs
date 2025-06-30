@@ -58,6 +58,15 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 2;
         }
+
+        if (transform.position.y <= -8)
+        {
+            transform.position = checkpoint;
+            anim.SetBool("isHit", true);
+            rb.bodyType = RigidbodyType2D.Static;
+            // Start the coroutine to return to normal animation after a delay
+            StartCoroutine(ResetToNormalAnimation());
+        }
     }
 
     private void Move()
