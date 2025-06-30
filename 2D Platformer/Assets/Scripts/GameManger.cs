@@ -21,6 +21,8 @@ public class GameManger : MonoBehaviour
     {
         brownPlatform.GetComponent<BrownMovingPlatform>().isMoving = false;
         brownPlatform.GetComponent<BrownMovingPlatform>().destinationReached = false;
+        brownPlatform.GetComponent<BrownMovingPlatform>().numBalls = 1f;
+        brownPlatform.GetComponent<BrownMovingPlatform>().countingTime = 0f;
         brownPlatform.transform.position = brownPlatform.GetComponent<BrownMovingPlatform>().initialSpot;
     }
 

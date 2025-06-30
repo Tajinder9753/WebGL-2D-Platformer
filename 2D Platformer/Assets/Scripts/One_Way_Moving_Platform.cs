@@ -9,9 +9,9 @@ public class BrownMovingPlatform : MonoBehaviour
     [SerializeField] Vector3 offset;
     [SerializeField] Vector3 topOffset;
     private float delayTime = 3f;
-    private float countingTime = 0;
+    public float countingTime = 0;
     private float maxBalls = 4;
-    private float numBalls = 1;
+    public float numBalls = 1;
     public bool isMoving = false;
     public bool destinationReached = false;
     public Vector3 initialSpot;
