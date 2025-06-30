@@ -11,7 +11,7 @@ public class CheckPoint : MonoBehaviour
         // Cache the Animator component on start
         anim = GetComponent<Animator>();
     }
-
+    //when the player passes the checkpoint will trigger the animation
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Play the checkpoint animation (triggered once)

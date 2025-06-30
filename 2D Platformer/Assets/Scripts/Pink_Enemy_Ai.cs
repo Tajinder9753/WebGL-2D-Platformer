@@ -15,6 +15,8 @@ public class Pink_Enemy_Ai : MonoBehaviour
         StartCoroutine(MoveEnemy());
     }
 
+    //co-routine to move the enemy back and forth on the platform
+    //changing direction whenever they collide with anything not the player
     private IEnumerator MoveEnemy()
     {
         while (true)
@@ -38,6 +40,7 @@ public class Pink_Enemy_Ai : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //flips direction when colliding with an object that is not the player 
         if (collision.collider.tag != "Player")
         {
             // Flip direction

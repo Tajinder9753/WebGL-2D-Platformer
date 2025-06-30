@@ -11,7 +11,7 @@ public class SmashingBlock : MonoBehaviour
     private Vector3 startPosition;
     Rigidbody2D rb;
     Animator anim;
-    public float returnSpeed = 2f; // units per second
+    public float returnSpeed = 2f; 
     private bool isReturning = false;
     [SerializeField] GameObject smoke;
 
@@ -38,26 +38,26 @@ public class SmashingBlock : MonoBehaviour
 
     }
 
+    //falls down towards the ground when player is beneath 
     private void StartFalling()
     {
-        Debug.Log("being called");
         isFalling = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = fallSpeed;
     }
 
+    //returns back to position after hitting the ground 
     private void GoBack()
     {
         if (!isReturning)
             StartCoroutine(MoveBackToStart());
     }
-
+    //co-routine to move back to starting position 
     private IEnumerator MoveBackToStart()
     {
         isReturning = true;
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.velocity = Vector2.zero;
-
         while (Vector3.Distance(transform.position, startPosition) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, startPosition, returnSpeed * Time.deltaTime);
@@ -69,12 +69,15 @@ public class SmashingBlock : MonoBehaviour
         isReturning = false;
         anim.SetBool("hitGround", false);
     }
+    //resets the bools when the block hits the ground 
+    //begins moving back towards the starting position
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Ground")
         {
             anim.SetBool("isFalling", false);
             anim.SetBool("hitGround", true);
+            //creates and destroys the smoke effect when the block lands on the ground 
             GameObject effectInstance = (GameObject)Instantiate(smoke, transform.position-new Vector3(0,+2f,0), transform.rotation);
             Destroy(effectInstance, 2f);
             GoBack();

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManger : MonoBehaviour
 {
     [SerializeField] GameObject brownPlatform;
-    public void starGame()
+    public void startGame()
     {
         SceneManager.LoadScene(1);
     }
@@ -16,9 +16,11 @@ public class GameManger : MonoBehaviour
         Application.Quit();
     }
 
+    //resets the brown moving platform if the player gets hit or falls off and restarts at the checkpoint
    public void resetBrownPlatform()
     {
         brownPlatform.GetComponent<BrownMovingPlatform>().isMoving = false;
+        brownPlatform.GetComponent<BrownMovingPlatform>().destinationReached = false;
         brownPlatform.transform.position = brownPlatform.GetComponent<BrownMovingPlatform>().initialSpot;
     }
 

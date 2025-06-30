@@ -9694,7 +9694,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1744748248773077858, guid: cb072347cbee2014d98f29751fd5fb7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 39.891922
+      value: 40.03
       objectReference: {fileID: 0}
     - target: {fileID: 1744748248773077858, guid: cb072347cbee2014d98f29751fd5fb7e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9735,6 +9735,10 @@ PrefabInstance:
     - target: {fileID: 4191961407859006334, guid: cb072347cbee2014d98f29751fd5fb7e, type: 3}
       propertyPath: m_Name
       value: enemy_barrier
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762866434135090770, guid: cb072347cbee2014d98f29751fd5fb7e, type: 3}
+      propertyPath: m_BodyType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6762866434135090770, guid: cb072347cbee2014d98f29751fd5fb7e, type: 3}
       propertyPath: m_Simulated
@@ -10303,10 +10307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  isMoving: 0
   spikeBall: {fileID: 6178144421938258601, guid: 582332afa9d2d6d4f9559296e1936957, type: 3}
   offset: {x: 10, y: 1, z: 0}
   topOffset: {x: 16, y: 3, z: 0}
+  isMoving: 0
+  destinationReached: 0
   initialSpot: {x: 0, y: 0, z: 0}
 --- !u!1 &932352877
 GameObject:
@@ -11616,7 +11621,7 @@ Transform:
   m_GameObject: {fileID: 1955615451}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.42, y: -3.15, z: 0}
+  m_LocalPosition: {x: -14.51, y: -3.08, z: 0}
   m_LocalScale: {x: 5.7875, y: 5.55, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

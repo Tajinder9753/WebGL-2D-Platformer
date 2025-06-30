@@ -20,7 +20,8 @@ public class FallingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isFalling && collision.collider.CompareTag("Player"))
+        //starts falling if the player steps on the platform
+        if (!isFalling && collision.collider.tag == "Player")
         {
             Invoke(nameof(StartFalling), fallDelay);
         }
@@ -28,12 +29,13 @@ public class FallingPlatform : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (isFalling && collision.collider.CompareTag("Player"))
+        //returns back to its original spot when the player leaves the platform
+        if (isFalling && collision.collider.tag == "Player")
         {
             StartCoroutine(ReturnPlatform());
         }
     }
-
+    //starts the MoveToPosition co-routine 
     private void StartFalling()
     {
         if (moveCoroutine != null) StopCoroutine(moveCoroutine);
@@ -42,6 +44,7 @@ public class FallingPlatform : MonoBehaviour
         moveCoroutine = StartCoroutine(MoveToPosition(targetPos, fallSpeed));
     }
 
+    //co-routine to return the platform back up 
     private IEnumerator ReturnPlatform()
     {
         yield return new WaitForSeconds(returnDelay);
@@ -50,6 +53,7 @@ public class FallingPlatform : MonoBehaviour
         isFalling = false;
     }
 
+    //co-routine to move the platform down
     private IEnumerator MoveToPosition(Vector3 targetPos, float speed)
     {
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
