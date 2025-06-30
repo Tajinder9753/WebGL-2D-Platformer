@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private Animator anim;
     private bool isGrounded;
-    GameManger gameManager;
     public Vector3 checkpoint;
 
     private void OnCollisionEnter2D(Collision2D collision)
